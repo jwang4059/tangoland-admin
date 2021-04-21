@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 
@@ -36,6 +36,15 @@ describe("App", () => {
 	test("renders alert after submit", async () => {
 		render(<App />);
 		expect(screen.queryByRole("alert")).toBeNull();
-		expect(await screen.findByRole("alert")).toBeInTheDocument();
+
+		await userEvent.type(screen.getByLabelText(/expression/i), "test3.1");
+		await userEvent.type(screen.getByLabelText(/kana/i), "test3.2");
+		await userEvent.type(screen.getByLabelText(/romaji/i), "test3.3");
+		await userEvent.type(screen.getByLabelText(/meaning/i), "test3.4");
+		await userEvent.click(screen.getByRole("button"));
+
+		await waitFor(() => screen.getByRole("alert"));
+
+		expect(screen.getByRole("alert")).toBeInTheDocument();
 	});
 });
