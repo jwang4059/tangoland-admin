@@ -71,7 +71,6 @@ const App = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		console.log(formState);
 
 		if (!canAdd) {
 			setError(true);
@@ -92,13 +91,13 @@ const App = () => {
 			} else {
 				setSnackbar({
 					open: true,
-					message: `Error: ${result.message ? result.message : "Unknown"}`,
+					message: `Error: ${result?.message ? result.message : "Unknown"}`,
 				});
 			}
 		} catch (e) {
 			setSnackbar({
 				open: true,
-				message: `Error: ${e}`,
+				message: `${e}`,
 			});
 		}
 	};
